@@ -4,7 +4,7 @@
     $bodyTop = <<<CODE
         <div class="center">
             <h1 class="title">Welcome to Movie Reviews!</h1>
-            <img class="img_center" src="https://png2.kisspng.com/sh/c1fd9766032ccbdf58a68925350e855b/L0KzQYm3UsE3N6Nwj5H0aYP2gLBuTgBpd6V0fARqcHjsc37tifxuNaNqfd42Y3zsgH7okwQudZD7gdc2ZnnvfX68gcg3P2g6TqZqOXPlQ3A7V8kxO2I8SaMAMUi6RoKBUcQ0OGY7RuJ3Zx==/kisspng-photographic-film-reel-clip-art-movie-film-5a8677564a9cb3.4790317115187618143056.png" alt="reel logo" width="150px" height="150px">
+            <img class="img_center" src="../images/reel.png" alt="reel logo" width="150px" height="150px">
             <h3>Sign in</h3>
             <form action="main.php" method="post" class="form-inline">
                 <label for="email" style="padding-left:30px;">Email:</label>
