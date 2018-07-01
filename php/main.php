@@ -59,16 +59,15 @@ CODE;
         $result = mysqli_query($connect, $sqlquery);
         if ($result) {
             $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            if (count($data) > 0)
+            if ($data)
                 if (password_verify($_POST["password"], $data["password"])) {
                     header('Location: select.php');
                 } else
                     $bodyTopMessage = "<h4 style=\"text-align: center; color:red;\"> error: incorrect password</h4>";
             else
                 $bodyTopMessage = "<h4 style=\"text-align: center; color:red;\"> error: email does not exist</h4>";
-        } else {
-            echo "shit";
         }
+        mysqli_close($connect);
     }
 
 
