@@ -1,7 +1,5 @@
 <?php
     include("support.php");
-
-    print_r($_POST);
     
     $bodyTop = <<<CODE
         <div class="center">
