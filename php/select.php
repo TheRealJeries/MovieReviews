@@ -1,20 +1,22 @@
 <?php
-  require_once("support.php");
+  require_once("supportForSelect.php");
 
   $top = <<<EOTOP
     <div class="center">
         <h1 class="title">Lets See What We Have!</h1>
         <img class="img_center" src="../images/reel.png" alt="reel logo" width="150px" height="150px">
         <form action="select.php" method="post">
-        <em><input type="text" name="search_name" id="search_name" placeholder="Please enter the name of the movie" size="60%"/></em>
-        <input type="submit" name="sub_search" id="sub_search" value="find" />
+        <em><input type="text" name="search_name" id="search_name" placeholder="Please enter the keywords of the movie" size="60%" /></em>
+        <input type="submit" name="sub_search" id="sub_search" value="Find" />
+        <input type="submit" name="back" id="back" value="Clear" />
         </form>
     </div>
 
 EOTOP;
 
   $table = <<<EOTABLE
-  <form action="display.php" method="post">
+
+    <hr>
     <table class="table, table-striped table-bordered">
       <tbody>
 
@@ -31,37 +33,58 @@ EOTABLE;
   if (isset($_POST["sub_search"]) && $_POST["search_name"] !== "") {
 
     $search_name = $_POST["search_name"];
+    $table .= <<<EOSE
+    <div class="center"><h3>Keywords: <em>$search_name</em></h3></div>
+EOSE;
 
-    $search_query = 'select image, rating from movies where name = '."'{$search_name}'";
+    $search_query = 'select name, image, rating from movies where name like '."'%{$search_name}%'";
 
     $search_result = $connect_movies->query($search_query);
 
+    if ($search_result) {
+      $num_rows = $search_result->num_rows;
 
-      $search_row = $search_result->fetch_array(MYSQLI_ASSOC);
-      $search_imag = base64_encode($search_row["image"]);
-      $search_rate = $search_row["rating"];
+      if ($num_rows !== 0) {
+  			for ($row_index = 0; $row_index < $num_rows; $row_index++) {
+  				$search_result->data_seek($row_index);
+          $row = $search_result->fetch_array(MYSQLI_ASSOC);
+          $imag = base64_encode($row["image"]);
+          $rate = $row["rating"];
+          $name = $row["name"];
 
-      if ($search_imag != "") {
-      $table .= <<<EOIMAG
-      <tr>
-        <td>
-          <a href="#" onclick="$(this).closest('form').submit();">
-          <input type="hidden" name="movie_to_be_displayed" value="$search_name" />
-          <img src="data:image/jpeg;base64, {$search_imag}" />
-          </a>
-        </td>
-        <td>
-        <a href="#" onclick="$(this).closest('form').submit();">
-        <input type="hidden" name="movie_to_be_displayed" value="$search_name" />
-        <strong>$search_name</strong>
-        </a>
-        </td>
-        <td><strong>$search_rate</strong></td>
-      </tr>
+          $table .= <<<EOIMAG
+          <tr>
+            <td class="col-xs-4">
+            <form action="display.php" method="post">
+              <a href="#" onclick="$(this).closest('form').submit();">
+              <input type="hidden" name="movie_to_be_displayed" value="$name" />
+              <div class="text-center">
+              <img src="data:image/jpeg;base64, {$imag}" width="120" height="160" style="margin: 1em;"/>
+              </div>
+              </a>
+            </form>
+            </td>
+            <td class="col-xs-6">
+            <form action="display.php" method="post">
+              <a href="#" onclick="$(this).closest('form').submit();">
+              <input type="hidden" name="movie_to_be_displayed" value="$name" />
+              <strong><em>$name</em></strong>
+            </a>
+            </form>
+            </td>
+            <td class="col-xs-2"><strong>$rate</strong></td>
+          </tr>
 EOIMAG;
 
+        }
       } else {
         $empty = true;
+      }
+
+
+
+
+
       }
 
 
@@ -83,19 +106,25 @@ EOIMAG;
 
           $table .= <<<EOIMAG
           <tr>
-            <td>
+            <td class="col-xs-4">
+            <form action="display.php" method="post">
               <a href="#" onclick="$(this).closest('form').submit();">
               <input type="hidden" name="movie_to_be_displayed" value="$name" />
-              <img src="data:image/jpeg;base64, {$imag}" />
+              <div class="text-center">
+              <img src="data:image/jpeg;base64, {$imag}" width="120" height="160" style="margin: 1em;"/>
+              </div>
               </a>
+            </form>
             </td>
-            <td>
-            <a href="#" onclick="$(this).closest('form').submit();">
-            <input type="hidden" name="movie_to_be_displayed" value="$name" />
-            <strong>$name</strong>
+            <td class="col-xs-6">
+            <form action="display.php" method="post">
+              <a href="#" onclick="$(this).closest('form').submit();">
+              <input type="hidden" name="movie_to_be_displayed" value="$name" />
+              <strong><em>$name</em></strong>
             </a>
+            </form>
             </td>
-            <td><strong>$rate</strong></td>
+            <td class="col-xs-2, rate"><strong>$rate</strong></td>
           </tr>
 EOIMAG;
 
@@ -106,9 +135,9 @@ EOIMAG;
   }
 
 
-  $table .= "</tbody></table></form>";
+  $table .= "</tbody></table>";
   if ($empty) {
-    $body = $top."No Movie Found!";
+    $body = $top."<hr><div class=\"center\"><h3>No Movie Found!</h3></div>";
   } else {
     $body = $top.$table;
   }
