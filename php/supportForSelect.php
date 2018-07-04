@@ -25,6 +25,7 @@ function generatePage($body) {
               .rate {
                 font-size: 20px;
                 text-align: center;
+                color: blue;
               }
             </style>
         </head>
