@@ -17,7 +17,7 @@ EOTOP;
   $table = <<<EOTABLE
 
     <hr>
-    <table class="table, table-striped table-bordered">
+    <table class="table-striped table-bordered">
       <tbody>
 
 EOTABLE;
