@@ -29,7 +29,7 @@ CODE;
             <form action="main.php" method="post" class="form-inline">
                 <input type="email" name="new_email" method="post" placeholder="Email" required>
                 <br><br>
-                <input type="password" name="new_password" method="post" placeholder="Password" required>
+                <input id="pw" type="password" name="new_password" method="post" placeholder="Password" required>
                 <br><br>
                 <input type="password" name="new_password_verify" method="post" placeholder="Verify password" required>
                 <br><br>
@@ -56,10 +56,7 @@ CODE;
     }
 
     if (isset($_POST["submit"])) {
-
-
         $connect = mysqli_connect("localhost", "user", "user", "moviereviews");
-
         $sqlquery = sprintf("select email,password from users where email=\"".$_POST["email"]."\"");
         $result = mysqli_query($connect, $sqlquery);
         if ($result) {
@@ -75,7 +72,7 @@ CODE;
         }
         mysqli_close($connect);
     }
-
-
+    
     echo generatePage($bodyTop.$bodyTopMessage."<hr>".$bodyBot.$bodyBotMessage);
 ?>
+
