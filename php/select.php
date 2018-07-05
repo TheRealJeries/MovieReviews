@@ -2,9 +2,10 @@
   require_once("supportForSelect.php");
 
   $top = <<<EOTOP
-    <div class="center">
+    <div class="center selectTitle">
+        <p><small>@Photo from bgr.com@</small></p>
         <h1 class="title">Lets See What We Have!</h1>
-        <img class="img_center" src="../images/reel.png" alt="reel logo" width="150px" height="150px">
+
         <form action="select.php" method="post">
         <em><input type="text" name="search_name" id="search_name" placeholder="Please enter the keywords of the movie" size="60%" /></em>
         <input type="submit" name="sub_search" id="sub_search" value="Find" />

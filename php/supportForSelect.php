@@ -34,11 +34,25 @@ function generatePage($body) {
                 color: blue;
               }
               body {
-                background: #a6a2d7;
+                background: black;
+                background-image: url('../images/movies-background.jpg');
+                height:100%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
               }
               h1 {
-                text-shadow: silver .15em .15em .15em;
-                color: #fff9f3;
+                text-shadow: black .1em .1em .1em;
+                color: white;
+              }
+              h3 {
+                text-shadow: black .1em .1em .1em;
+                color: white;
+              }
+
+
+              small {
+                color:white;
               }
             </style>
         </head>
