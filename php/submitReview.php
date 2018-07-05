@@ -20,8 +20,7 @@
 
         Rating: <input type="number" id="rating" name="rating" min="0" max="10" step="0.1"> /10 <br><br>
 
-        Comment:<br>
-        <input type ="textarea" name="comment" id="comment" rows="20" cols="50"><br>
+       
 
         <input type="submit" name="submit" id="back" value="Submit"><br>
 
