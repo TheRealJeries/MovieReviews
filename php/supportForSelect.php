@@ -16,7 +16,13 @@ function generatePage($body) {
               table {
                 margin: 0 auto;
                 width: 80%;
+                background: #e7e7e7;
               }
+
+              table.table-bordered {
+                border: 2px solid;
+              }
+
               a {
                 color: black;
                 font: em;
@@ -26,6 +32,13 @@ function generatePage($body) {
                 font-size: 20px;
                 text-align: center;
                 color: blue;
+              }
+              body {
+                background: #a6a2d7;
+              }
+              h1 {
+                text-shadow: silver .15em .15em .15em;
+                color: #fff9f3;
               }
             </style>
         </head>
