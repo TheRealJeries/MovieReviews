@@ -9,20 +9,48 @@
 	$table = "movies";
 	$db = connectToDB($host, $user, $password, $database);
 
-	$fileToInsert = "../images/testudo.jpg";
+
+	$sqlspit = fopen("sqlspit", "r") or die("Unable to open sql!");
+	$filespit = fopen("filespit", "r") or die("Unable to open filenames!");
+	$docMimeType = "image/jpeg";
+	
+
+	$body = "";
+	$tester = "things";
+	
+		$fileToInsert = trim(fgets($filespit));
+		// if($fileToInsert=="")
+		// 	break;
+		$fileData = addslashes(file_get_contents($fileToInsert));
+		$sqlQuery = str_replace("^image^","'{hello}'",fgets($sqlspit));
+		// $result = mysqli_query($db, $sqlQuery);
+		// // echo $sqlQuery;
+		// if ($result) {
+		// 	$body = "<h3>Document $fileToInsert has been added to the database.</h3>";
+		// } else {
+		// 	$body = "<h3>Failed to add document $fileToInsert: ".mysqli_error($db)." </h3>";
+		// }
+		echo $sqlQuery;
+	
+
+	$fileToInsert = "../images/500DaysOfSummer.jpg";
 	$docMimeType = "image/jpeg";
 
 	$fileData = addslashes(file_get_contents($fileToInsert));
 
-	$sqlQuery = "insert into $table (name, image, description, rating, total) values ";
-	$sqlQuery .= "(\"Testudo\" ,'{$fileData}' ,\"THis is testudo\", 4.2, 32)";
+	$sqlQuery = "insert into $table (name, image, description, rating, total) values ('500 Days Of Summer','{$fileData}','An offbeat romantic comedy about a woman who doesn\'t believe true love exists, and the young man who falls for her',7.7,10)";
 	$result = mysqli_query($db, $sqlQuery);
 	if ($result) {
 		$body = "<h3>Document $fileToInsert has been added to the database.</h3>";
 	} else { 				   ;
 		$body = "<h3>Failed to add document $fileToInsert: ".mysqli_error($db)." </h3>";
 	}
+	
 
+	
+	
+fclose($sqlspit);
+fclose($filespit);
 	/* Closing */
 	mysqli_close($db);
 
@@ -37,3 +65,4 @@ function connectToDB($host, $user, $password, $database) {
 	return $db;
 }
 ?>
+
