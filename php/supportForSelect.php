@@ -45,6 +45,12 @@ function generatePage($body) {
                 text-shadow: black .1em .1em .1em;
                 color: white;
               }
+              h3 {
+                text-shadow: black .1em .1em .1em;
+                color: white;
+              }
+
+
               small {
                 color:white;
               }
