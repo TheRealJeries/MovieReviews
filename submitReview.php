@@ -8,7 +8,9 @@
 	$password = "user";
 	$database = "moviereviews";
 	$table = "movies";
-    $db = connectToDB($host, $user, $password, $database);
+    //$db = connectToDB($host, $user, $password, $database);
+    $db_connection = new mysqli($host, $user, $password, $database);
+
     
     if(!isset($_POST["submit"])){
     $body = <<<EOBODY
