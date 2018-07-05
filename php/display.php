@@ -1,7 +1,8 @@
 <?php
-	/* Inserts image */
-	require_once("support.php");
+	require_once("supportForSelect.php");
+	// echo "This is what I get".$_POST["movie_to_be_displayed"];
 
+	$body = "";
 	$host = "localhost";
 	$user = "user";
 	$password = "user";
@@ -9,22 +10,55 @@
 	$table = "movies";
 	$db = connectToDB($host, $user, $password, $database);
 
-	$fileToGet = "../images/testudo.jpg";
+	$fileToInsert = "../images/testudo.jpg";
 	$docMimeType = "image/jpeg";
 
-  $name = "error";
-  if (isset($_POST['movie_to_be_displayed'])) {
-    $name = $_POST['movie_to_be_displayed'];
-  } else {
-    $body = "There has been an error! Please try again";
-  }
+	$fileData = addslashes(file_get_contents($fileToInsert));
 
-	$sqlQuery = "select image, description, rating, total from $table where name = '$name'";
+	$sqlQuery = "select * from $table where name = \"Testudo\"";
 	$result = mysqli_query($db, $sqlQuery);
-	if ($result) {
-		$body = "<h3>Found info about $name!!</h3>";
-	} else {
-		$body = "<h3>Error: ".mysqli_error($db)." </h3>";
+
+
+
+	if ($result->num_rows > 0) {
+	    // output data of each row
+	    
+		while($row = $result->fetch_assoc()){
+
+	    	$name = $row["name"];
+	    	$image = $row["image"];
+	    	$description = $row["description"];
+	    	$rating = $row["rating"];
+	    	$total = $row["total"];
+			
+			$body .= '<img src="data:image/jpeg;base64,'.base64_encode( $image ).'"/>';
+	    	$body.= "
+			<h2>$name</h2>
+			<hr>
+			<div>
+			<h4>Synopsis</h4>
+			$description
+			<a href=\"main.php\">
+				<input type=\"button\" value=\"Return to main menu\">
+			</a>
+			<a href=\"select.php\">
+				<input type=\"button\" value=\"Back\">
+			</a>
+			</div>
+			<div>
+
+			Average rating: $rating <br>
+			Total: $total <br>
+			</div>
+
+		"
+	    	;
+	    }
+
+	    
+		
+	}else {
+		$body = "<h3>Failed to add document $fileToInsert: ".mysqli_error($db)." </h3>";
 	}
 
 	/* Closing */
@@ -40,4 +74,6 @@ function connectToDB($host, $user, $password, $database) {
 	}
 	return $db;
 }
-?>
+
+ ?>
+
