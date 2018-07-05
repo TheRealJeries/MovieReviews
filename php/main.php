@@ -1,6 +1,9 @@
 <?php
+  session_start();
     include("support.php");
-    
+    if (isset($_SESSION["logged"]) && ($_SESSION["logged"] == true)) {
+      header('Location: select.php');
+    }
     $bodyTop = <<<CODE
         <div class="center">
             <h1 class="title">Welcome to Movie Reviews!</h1>
@@ -42,7 +45,7 @@ CODE;
                 echo "Connect failed.\n".mysqli_connect_error();
                 exit();
             }
-            $sqlquery = sprintf("insert into users (email, password) values ('%s', '%s')", 
+            $sqlquery = sprintf("insert into users (email, password) values ('%s', '%s')",
                         $_POST["new_email"], password_hash($_POST["new_password"], PASSWORD_DEFAULT));
             $result = mysqli_query($connect, $sqlquery);
             mysqli_close($connect);
@@ -51,8 +54,10 @@ CODE;
             $bodyBotMessage =  "<h4 style=\"text-align: center; color:red;\"> error: passwords do not match</h4>";
         }
     }
-    
+
     if (isset($_POST["submit"])) {
+
+
         $connect = mysqli_connect("localhost", "user", "user", "moviereviews");
 
         $sqlquery = sprintf("select email,password from users where email=\"".$_POST["email"]."\"");
@@ -61,6 +66,7 @@ CODE;
             $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
             if ($data)
                 if (password_verify($_POST["password"], $data["password"])) {
+                    $_SESSION['logged'] = true;
                     header('Location: select.php');
                 } else
                     $bodyTopMessage = "<h4 style=\"text-align: center; color:red;\"> error: incorrect password</h4>";

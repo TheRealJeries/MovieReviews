@@ -1,4 +1,5 @@
 <?php
+session_start();
 	/* Inserts image */
 	require_once("support.php");
 

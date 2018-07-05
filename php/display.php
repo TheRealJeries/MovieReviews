@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require_once("supportForSelect.php");
 	// echo "This is what I get".$_POST["movie_to_be_displayed"];
 
@@ -21,7 +22,10 @@
 	$sqlQuery = "select * from $table where name = '".$name_from_select."'";
 	$result = mysqli_query($db, $sqlQuery);
 
-
+$body .= '<div><div class="w3-container"><div class="center">
+<table style="opacity: 0.9;" class="table-striped table-bordered">
+	<tbody><tr>
+		<td class="col-xs-4">';
 
 	if ($result->num_rows > 0) {
 	    // output data of each row
@@ -41,27 +45,34 @@
 			<div>
 			<h4>Synopsis</h4>
 			$description
+			<br/><br/>
+			<div>
+
+			<strong><em>Average rating:</em> $rating </strong><br>
+			<strong><em>Total:</em> $total</strong> <br>
+			</div><br/>
+			<div>
 			<a href="main.php">
 				<input type="button" value="Return to main menu">
 			</a>
+
 			<a href="select.php">
 				<input type="button" value="Back">
 			</a>
 			</div>
+			<br>
 			<div>
-
-			Average rating: $rating <br>
-			Total: $total <br>
-			</div>
-
 			<form action="submitReview.php" method="post">
-				<input type="hidden" name="send_movie" id="send_movie" value="$name"/>
+				<input type="hidden" name="send_movie" id="send_movie" value="$name"/ >
 				<input type="submit" name="send" id="send" value="Send Review"/>
 				</form>
+				</div>
 
+				<hr>
 EOSEND;
 	    	;
 	    }
+			$body .= 		"</td></tr></table></div></div></div>";
 
 
 

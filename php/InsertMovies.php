@@ -1,4 +1,5 @@
 <?php
+session_start();
 	/* Inserts image */
 	require_once("support.php");
 
@@ -13,11 +14,11 @@
 	$sqlspit = fopen("sqlspit", "r") or die("Unable to open sql!");
 	$filespit = fopen("filespit", "r") or die("Unable to open filenames!");
 	$docMimeType = "image/jpeg";
-	
+
 
 	$body = "";
 	$tester = "things";
-	
+
 		$fileToInsert = trim(fgets($filespit));
 		// if($fileToInsert=="")
 		// 	break;
@@ -31,7 +32,7 @@
 		// 	$body = "<h3>Failed to add document $fileToInsert: ".mysqli_error($db)." </h3>";
 		// }
 		echo $sqlQuery;
-	
+
 
 	$fileToInsert = "../images/500DaysOfSummer.jpg";
 	$docMimeType = "image/jpeg";
@@ -45,10 +46,10 @@
 	} else { 				   ;
 		$body = "<h3>Failed to add document $fileToInsert: ".mysqli_error($db)." </h3>";
 	}
-	
 
-	
-	
+
+
+
 fclose($sqlspit);
 fclose($filespit);
 	/* Closing */
@@ -65,4 +66,3 @@ function connectToDB($host, $user, $password, $database) {
 	return $db;
 }
 ?>
-

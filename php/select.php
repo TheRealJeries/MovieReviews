@@ -1,4 +1,5 @@
 <?php
+session_start();
   require_once("supportForSelect.php");
 
   $top = <<<EOTOP
@@ -18,7 +19,7 @@ EOTOP;
   $table = <<<EOTABLE
 
     <hr>
-    <table class="table-striped table-bordered">
+    <table style="opacity: 0.9;" class="table-striped table-bordered">
       <tbody>
 
 EOTABLE;
